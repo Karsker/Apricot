@@ -26,14 +26,14 @@ const theme = createTheme({
         fontWeight: 600
     }
   },
-  palette: {
-    primary: {
-        main: "#e95420",
-    },
-    secondary: {
-        main: "#2e74c9",
-    }
-  }
+//   palette: {
+//     primary: {
+//         main: "#e95420",
+//     },
+//     secondary: {
+//         main: "#2e74c9",
+//     }
+//   }
 });
 
 export default theme;
