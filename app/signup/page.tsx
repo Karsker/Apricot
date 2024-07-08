@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -6,11 +5,16 @@ import {
   Button,
   TextField,
   Container,
-  Paper,
   Box,
-  Typography
+  Typography,
+  Divider,
+  Link
 } from "@mui/material";
 // import { SubmitButton } from "./submit-button";
+
+export const metadata = {
+  title: "Sign Up"
+}
 
 export default function SignUp({
   searchParams,
@@ -72,6 +76,12 @@ export default function SignUp({
           >
             Sign Up
           </Button>
+
+          <Divider sx = {{
+            width: '100%'
+          }}/>
+
+          <Typography variant="subtitle2" color="gray">Already have an account? <Link href="/login" color="inherit">Go to login</Link></Typography>
         </Box>
       </form>
     </Container>
