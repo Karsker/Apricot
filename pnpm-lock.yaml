@@ -33,7 +33,7 @@ importers:
         specifier: latest
         version: 0.4.0(@supabase/supabase-js@2.44.2)
       '@supabase/supabase-js':
-        specifier: latest
+        specifier: ^2.44.2
         version: 2.44.2
       geist:
         specifier: ^1.2.1

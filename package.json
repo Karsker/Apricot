@@ -14,7 +14,7 @@
     "@mui/material": "^5.16.0",
     "@mui/material-nextjs": "^5.15.11",
     "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "latest",
+    "@supabase/supabase-js": "^2.44.2",
     "geist": "^1.2.1",
     "next": "latest",
     "react": "18.2.0",

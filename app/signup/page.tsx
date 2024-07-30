@@ -1,6 +1,4 @@
-import { headers } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { signUp } from "./actions";
 import {
   Button,
   TextField,
@@ -21,28 +19,6 @@ export default function SignUp({
 }: {
   searchParams: { message: string };
 }) {
-  const signUp = async (formData: FormData) => {
-    "use server";
-
-    const origin = headers().get("origin");
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
-    }
-
-    return redirect("/login");
-  };
 
   return (
     <Container
@@ -68,8 +44,10 @@ export default function SignUp({
           }}
         >
           <Typography variant="h2" sx={{ fontWeight: 100 }}>Sign Up</Typography>
-          <TextField label="Email" name="email" fullWidth></TextField>
-          <TextField label="Password" name="password" fullWidth type="password"></TextField>
+          <TextField label="First Name" name="firstName" fullWidth required></TextField>
+          <TextField label="Last Name" name="lastName" fullWidth></TextField>
+          <TextField label="Email" name="email" fullWidth required></TextField>
+          <TextField label="Password" name="password" fullWidth type="password" required></TextField>
 
           <Button
             formAction={signUp} variant="contained" type="submit" color="primary"
