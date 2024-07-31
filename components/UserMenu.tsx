@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react'
 import {
     Menu,
@@ -28,7 +29,7 @@ const UserMenu = ({ username, logoutFunction }: menuitems) => {
     }
     return (
         <div>
-            <Button variant='text' color='inherit' onClick={handleOpenUserMenu} sx={{ ml: 1 }}>
+            <Button variant='text' color='inherit' onClick={handleOpenUserMenu} sx={{ ml: 1, fontSize: 15 }}>
                 <AccountCircle sx={{ mr: 1 }} />
                 {username}
             </Button>

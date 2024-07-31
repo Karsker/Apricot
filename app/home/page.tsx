@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import { signOut } from './actions';
@@ -16,8 +16,9 @@ import {
   CssBaseline,
   Divider
 } from '@mui/material';
-import { Mail } from '@mui/icons-material';
-import { Inbox, CalendarToday, CalendarMonth } from '@mui/icons-material';
+
+import AddTaskButton from '@/components/AddTaskButton';
+import { Inbox, CalendarToday, CalendarMonth, AddTask } from '@mui/icons-material';
 import MuiDrawer from '@/components/MuiDrawer';
 
 const Home = async () => {
@@ -77,11 +78,17 @@ const Home = async () => {
         {/* <Toolbar /> */}
 
 
-        <List>
+        <List dense>
           <ListItem disablePadding>
             <UserMenu username={user.user_metadata.first_name} logoutFunction={signOut}/>
           </ListItem>
+
+          <ListItem disablePadding>
+            <AddTaskButton />
+          </ListItem>
+
           <Divider />
+
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
