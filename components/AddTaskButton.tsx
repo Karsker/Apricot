@@ -8,11 +8,22 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography';
+
+
 import { AddTask } from '@mui/icons-material';
-import { useState, Fragment } from 'react';
+import { useState,useEffect ,Fragment } from 'react';
+import { useFormState } from 'react-dom';
+import { addTask } from '@/utils/supabase/dbActions';
+
+const initialState = {
+    taskAdded: false
+}
+
+
 
 export default function AddTaskButton() {
     const [open, setOpen] = useState(false)
+    const [state, formAction] = useFormState(addTask, initialState)
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -21,7 +32,14 @@ export default function AddTaskButton() {
         setOpen(false);
     };
 
+    useEffect(() => {
+        if (state.taskAdded) {
+            handleClickClose();
+        }
+    }, [state])
+
     return (
+        
         <Fragment>
             <Button variant='text' onClick={handleClickOpen} sx = {{ color: '#e95420', p: 2, fontSize: 15}}>
                 <AddTask sx = {{ mr: 1 }}/>
@@ -36,7 +54,9 @@ export default function AddTaskButton() {
                     component: 'form',
                     onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
                         event.preventDefault();
-                        console.log('Task added successfully');
+                        const formData = new FormData(event.currentTarget);
+                        formAction(formData)
+                        
                     },
                     
                 }} 
@@ -51,7 +71,8 @@ export default function AddTaskButton() {
                         autoFocus
                         required
                         margin='dense'
-                        id='description'
+                        id='taskDesc'
+                        name='taskDesc'
                         label='Task description'
                         type='text'
                         fullWidth
@@ -61,7 +82,10 @@ export default function AddTaskButton() {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={handleClickClose}>
+                    <Button type='submit' variant='contained'>
+                        Add Task
+                    </Button>
+                    <Button onClick={handleClickClose} variant='outlined'>
                         Cancel
                     </Button>
                 </DialogActions>
