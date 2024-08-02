@@ -2,7 +2,9 @@ import React from 'react'
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import { signOut } from './actions';
+import { getInboxTasks, deleteTask } from '@/utils/supabase/dbActions';
 import UserMenu from '@/components/UserMenu';
+import TaskList from '@/components/TasksList';
 import {
   Typography,
   Box,
@@ -11,14 +13,13 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  AppBar,
-  Toolbar,
   CssBaseline,
-  Divider
+  Divider,
+  Checkbox
 } from '@mui/material';
 
 import AddTaskButton from '@/components/AddTaskButton';
-import { Inbox, CalendarToday, CalendarMonth, AddTask } from '@mui/icons-material';
+import { Inbox, CalendarToday, CalendarMonth, AddTask, RadioButtonUnchecked, CheckCircle } from '@mui/icons-material';
 import MuiDrawer from '@/components/MuiDrawer';
 
 const Home = async () => {
@@ -26,6 +27,10 @@ const Home = async () => {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
   const drawerWidth = 270
+  const tasksList = await getInboxTasks()
+
+
+
   if (!user) {
     return redirect("/login?message=loggedOut");
   }
@@ -35,29 +40,11 @@ const Home = async () => {
         // border: "solid 1px blue",
         width: "100vw",
         margin: 0,
-        display: 'flex'
+        display: 'flex',
+        padding: 0
       }
     }>
       <CssBaseline />
-      {/* Navigation Bar */}
-      {/* <AppBar position='fixed'
-        color='primary'
-        sx={{
-          zIndex: 2,
-          bgcolor: '#FF4149',
-          ml: `${drawerWidth}px`
-        }}>
-        <Toolbar>
-          <Typography variant='h6' sx={{ flexGrow: 1 }}>
-            Aporicot
-          </Typography>
-          
-        </Toolbar>
-      </AppBar> */}
-      <Toolbar />
-      {/* <form action={handleSignOut}>
-                <Button variant='contained' type='submit'>Logout</Button>
-            </form> */}
 
       {/* Sidebar */}
       <MuiDrawer
@@ -65,7 +52,7 @@ const Home = async () => {
         sx={{
           width: drawerWidth,
           zIndex: 1,
-          border: "none"
+          // border: "solid 1px red"
 
         }}
         PaperProps={{
@@ -75,12 +62,11 @@ const Home = async () => {
             bgcolor: "#fffbf7"
           }
         }}>
-        {/* <Toolbar /> */}
 
 
         <List dense>
           <ListItem disablePadding>
-            <UserMenu username={user.user_metadata.first_name} logoutFunction={signOut}/>
+            <UserMenu username={user.user_metadata.first_name} logoutFunction={signOut} />
           </ListItem>
 
           <ListItem disablePadding>
@@ -118,9 +104,25 @@ const Home = async () => {
 
         </List>
       </MuiDrawer>
-      <Box>
-        {/* <Toolbar /> */}
-        <Typography variant='h1'>Hello, {user.user_metadata.first_name}</Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%',
+          // border: 'solid 1px green',
+        }}
+      >
+
+        <Box
+          sx={{
+            // border: 'solid 1px red',
+            mt: 5
+          }}
+        >
+          <Typography variant='h1'>Inbox</Typography>
+
+          <TaskList tasksList={tasksList} />
+        </Box>
       </Box>
     </Box>
   )

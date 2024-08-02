@@ -10,3 +10,4 @@ export const signOut = async () => {
 
     return redirect('/home');
 };
+

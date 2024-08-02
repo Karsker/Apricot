@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography';
 
-
+import { useRouter } from 'next/navigation';
 import { AddTask } from '@mui/icons-material';
 import { useState,useEffect ,Fragment } from 'react';
 import { useFormState } from 'react-dom';
@@ -24,6 +24,7 @@ const initialState = {
 export default function AddTaskButton() {
     const [open, setOpen] = useState(false)
     const [state, formAction] = useFormState(addTask, initialState)
+    const router = useRouter();
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -35,6 +36,7 @@ export default function AddTaskButton() {
     useEffect(() => {
         if (state.taskAdded) {
             handleClickClose();
+            router.refresh()
         }
     }, [state])
 
