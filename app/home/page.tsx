@@ -1,10 +1,9 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
-import { signOut } from './actions';
-import { getInboxTasks, deleteTask } from '@/utils/supabase/dbActions';
-import UserMenu from '@/components/UserMenu';
+import { getInboxTasks } from '@/utils/supabase/dbActions';
 import TaskList from '@/components/TasksList';
+import Sidebar from '@/components/Sidebar';
 import {
   Typography,
   Box,
@@ -18,9 +17,7 @@ import {
   Checkbox
 } from '@mui/material';
 
-import AddTaskButton from '@/components/AddTaskButton';
-import { Inbox, CalendarToday, CalendarMonth, AddTask, RadioButtonUnchecked, CheckCircle } from '@mui/icons-material';
-import MuiDrawer from '@/components/MuiDrawer';
+
 
 const Home = async () => {
 
@@ -47,63 +44,7 @@ const Home = async () => {
       <CssBaseline />
 
       {/* Sidebar */}
-      <MuiDrawer
-        variant='permanent'
-        sx={{
-          width: drawerWidth,
-          zIndex: 1,
-          // border: "solid 1px red"
-
-        }}
-        PaperProps={{
-          sx: {
-            width: drawerWidth,
-            border: "none",
-            bgcolor: "#fffbf7"
-          }
-        }}>
-
-
-        <List dense>
-          <ListItem disablePadding>
-            <UserMenu username={user.user_metadata.first_name} logoutFunction={signOut} />
-          </ListItem>
-
-          <ListItem disablePadding>
-            <AddTaskButton />
-          </ListItem>
-
-          <Divider />
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Inbox />
-              </ListItemIcon>
-              <ListItemText>Inbox</ListItemText>
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <CalendarToday />
-              </ListItemIcon>
-              <ListItemText>Today</ListItemText>
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <CalendarMonth />
-              </ListItemIcon>
-              <ListItemText>Upcoming</ListItemText>
-            </ListItemButton>
-          </ListItem>
-
-        </List>
-      </MuiDrawer>
+      <Sidebar username={user.user_metadata.first_name} />
       <Box
         sx={{
           display: 'flex',
