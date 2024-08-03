@@ -1,7 +1,7 @@
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
-import theme from "./theme";
-import { ThemeProvider } from "@mui/material/styles";
+import App from "@/components/App";
+import { CssBaseline } from "@mui/material";
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -12,18 +12,23 @@ export const metadata = {
   description: "The task manager",
 };
 
+
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
+    
     <html lang="en">
       <body>
+        
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme} >
+          <App>
+            
             {children}
-          </ThemeProvider>
+          </App>
         </AppRouterCacheProvider>
       </body>
     </html>

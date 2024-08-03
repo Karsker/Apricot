@@ -1,5 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
-import { redirect } from "next/navigation";
+
 import {
   Button,
   TextField,
@@ -8,8 +7,6 @@ import {
   Typography,
   Divider,
   Link,
-  Snackbar,
-  Alert
 } from "@mui/material";
 import { signIn } from './actions';
 export default async function Login({

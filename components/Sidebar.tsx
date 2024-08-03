@@ -59,7 +59,7 @@ export default function Sidebar({ username }: props) {
           sx: {
             width: drawerWidth,
             border: "none",
-            bgcolor: "#fffbf7"
+            bgcolor: theme.palette.mode == 'light'?"#fffbf7":"#191919"
           }
         }}
 

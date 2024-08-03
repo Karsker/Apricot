@@ -1,12 +1,8 @@
 'use client';
-import { Roboto } from 'next/font/google';
-import { createTheme } from '@mui/material/styles';
 
-const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-});
+
+
+
 
 const theme = createTheme({
   typography: {
@@ -26,15 +22,9 @@ const theme = createTheme({
         fontWeight: 600
     }
   },
-  // palette: {
-  //   primary: {
-  //       main: "#FF4149",
-  //   },
-  //   secondary: {
-  //       main: "#2e74c9",
-  //   },
-    
-  // }
+  palette: {
+    mode: prefersDarkMode ? 'dark' : 'light'
+  }
 });
 
 export default theme;
