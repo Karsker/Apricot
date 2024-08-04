@@ -12,8 +12,6 @@ export const metadata = {
   description: "The task manager",
 };
 
-
-
 export default function RootLayout({
   children,
 }: {

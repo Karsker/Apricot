@@ -1,3 +1,4 @@
+'use client'
 
 import {
   Button,
@@ -8,13 +9,24 @@ import {
   Divider,
   Link,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import { signIn } from './actions';
+
+import { useState } from "react";
+
+
 export default async function Login({
   searchParams,
 }: {
   searchParams: { message: string };
 }) {
+  const [loggingIn, setLoggingIn] = useState<boolean>(false);
 
+  const loginUser = async (formData: FormData) => {
+    setLoggingIn(true);
+    await signIn(formData);
+    setLoggingIn(false);
+  }
   return (
     <Container
       sx={{
@@ -44,11 +56,11 @@ export default async function Login({
           <TextField label="Password" name="password" fullWidth type="password"></TextField>
 
           <Button
-            formAction={signIn} variant="contained" type="submit"
+            formAction={loginUser} variant="contained" type="submit"
           >
             Login
           </Button>
-
+          {loggingIn && <CircularProgress size={24}/>}
           <Divider sx={{
             width: '100%'
           }} />

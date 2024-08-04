@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography';
+import CircularProgress  from '@mui/material/CircularProgress';
 
 import { useRouter } from 'next/navigation';
 import { AddTask } from '@mui/icons-material';
@@ -23,6 +24,7 @@ const initialState = {
 
 export default function AddTaskButton() {
     const [open, setOpen] = useState(false)
+    const [taskSubmitting, setTaskSubmitting] = useState(false)
     const [state, formAction] = useFormState(addTask, initialState)
     const router = useRouter();
     const handleClickOpen = () => {
@@ -36,6 +38,7 @@ export default function AddTaskButton() {
     useEffect(() => {
         if (state.taskAdded) {
             handleClickClose();
+            setTaskSubmitting(false);
             router.refresh()
         }
     }, [state])
@@ -57,8 +60,8 @@ export default function AddTaskButton() {
                     onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
                         event.preventDefault();
                         const formData = new FormData(event.currentTarget);
-                        formAction(formData)
-                        
+                        formAction(formData);
+                        setTaskSubmitting(true);
                     },
                     
                 }} 
@@ -82,9 +85,9 @@ export default function AddTaskButton() {
                         
                     />
                 </DialogContent>
-
                 <DialogActions>
-                    <Button type='submit' variant='contained'>
+                    {taskSubmitting && <CircularProgress size={24}/>}
+                    <Button type='submit' variant='contained' disabled={taskSubmitting}>
                         Add Task
                     </Button>
                     <Button onClick={handleClickClose} variant='outlined'>

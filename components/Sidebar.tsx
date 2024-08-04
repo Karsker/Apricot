@@ -71,7 +71,7 @@ export default function Sidebar({ username }: props) {
             display: 'flex',
             justifyContent: 'space-between'
           }}>
-            <UserMenu username={username} logoutFunction={signOut} />
+            <UserMenu username={username} />
             {/* <IconButton onClick={handleDrawerClose}><Close sx={{ fontSize: 'inherit' }} /></IconButton> */}
           </ListItem>
 
