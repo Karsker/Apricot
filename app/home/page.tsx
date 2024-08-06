@@ -2,6 +2,7 @@ import React from 'react'
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import { getInboxTasks } from '@/utils/supabase/dbActions';
+
 import TaskList from '@/components/TasksList';
 import Sidebar from '@/components/Sidebar';
 import {
@@ -16,7 +17,7 @@ import {
   Divider,
   Checkbox
 } from '@mui/material';
-
+import Alert from '@mui/material/Alert';
 
 
 const Home = async () => {
@@ -42,7 +43,7 @@ const Home = async () => {
       }
     }>
       <CssBaseline />
-
+      
       {/* Sidebar */}
       <Sidebar username={user.user_metadata.first_name} />
       <Box
@@ -53,7 +54,7 @@ const Home = async () => {
           // border: 'solid 1px green',
         }}
       >
-
+        {/* <Alert sx = {{ position: 'absolute', z: 20 }} >Welcome back, {user.user_metadata.first_name}</Alert> */}
         <Box
           sx={{
             // border: 'solid 1px red',

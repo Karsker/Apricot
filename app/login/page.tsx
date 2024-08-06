@@ -12,21 +12,29 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 import { signIn } from './actions';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 
-export default async function Login({
+export default function Login({
   searchParams,
 }: {
   searchParams: { message: string };
 }) {
   const [loggingIn, setLoggingIn] = useState<boolean>(false);
-
-  const loginUser = async (formData: FormData) => {
+  const [userCredentials, setUserCredentials] = useState<FormData | undefined>(undefined);
+  const router = useRouter();
+  const loginUser = (formData: FormData) => {
     setLoggingIn(true);
-    await signIn(formData);
-    setLoggingIn(false);
+    setUserCredentials(formData);
   }
+
+  useEffect(() => {
+    if (loggingIn && userCredentials) {
+      signIn(userCredentials);
+    }
+  }, [loggingIn])
+
   return (
     <Container
       sx={{
@@ -39,7 +47,7 @@ export default async function Login({
     >
 
       <Typography variant="h1" color="#e95420">Apricot</Typography>
-      <form>
+      <form action={loginUser}>
         <Box
           sx={{
             display: "flex",
@@ -55,12 +63,10 @@ export default async function Login({
           <TextField label="Email" name="email" fullWidth></TextField>
           <TextField label="Password" name="password" fullWidth type="password"></TextField>
 
-          <Button
-            formAction={loginUser} variant="contained" type="submit"
-          >
+          <Button variant="contained" type="submit" disabled={loggingIn}>
             Login
           </Button>
-          {loggingIn && <CircularProgress size={24}/>}
+          {loggingIn && <CircularProgress size={24} />}
           <Divider sx={{
             width: '100%'
           }} />
